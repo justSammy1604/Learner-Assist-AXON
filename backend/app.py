@@ -6,11 +6,13 @@ cors=CORS(app)
 
 @app.route('/search')
 def searchCourse():
+    # 
     return {
-        'Courses':[]
+        'present':False,
+        'courses':[]
     }
 
 @app.route('/createCourse')
 def createCourse():
-    return {"res":'courseID'}
+    return {"result":'courseID'}
 
