@@ -1,0 +1,51 @@
+{
+    "uuid": "as^%%^FVYF&F*&",
+    "username": "elton",
+    "email": "elton02costa@gmail.com",
+    "full_name": "Elton costa",
+    "course":[
+    {
+        "course_id": "course_01",
+        "course_name": "introduction to python"
+    },
+    {
+        "course_id": "course_02",
+        "course_name": "introduction to Javascript"
+    },
+    {
+        "course_id": "course_02",
+        "course_name": "introduction to Typescript"
+    }
+],
+"friend":[
+    {
+        "friend_id": "siuhfa9shfuas"
+    },
+    {
+        "friend_id": "siuhfa9shfuas"
+    },
+    {
+        "friend_id": "siuhfa9shfuas"
+    }
+],
+"achivement": [
+    {
+        "achivement_id": "01",
+        "achivement_name": "super 5",
+        "achivement_description": "solve first 5 quiestions",
+        "achievement_status": true
+    },
+    {
+        "achivement_id": "02",
+        "achivement_name": "super 10",
+        "achivement_description": "solve first 10 quiestions",
+        "achievement_status": true
+    },
+    {
+        "achivement_id": "03",
+        "achivement_name": "super 15",
+        "achivement_description": "solve first 15 quiestions",
+        "achievement_status": true
+    }
+]
+}
