@@ -50,3 +50,67 @@ for sentence, topic, similarity_score in similarities:
 max_score = max(similarities, key=lambda x: x[1])
 
 print(f"Sentence with maximum average similarity score: '{max_score[0]}' | Average Similarity Score: {max_score[1]}")
+
+
+"""
+convert_to_questions: function|text
+Converts a sentence into a question based on the English format
+input: Fractals are complex geometric shapes that exhibit self-similarity at different scales
+output: What are complex geometric shapes that exhibit self-similarity at different scales
+"""
+
+def convert_to_question(sentence):
+    # Check for grammar errors and correct the sentence
+    matches = tool.check(sentence)
+    corrected_sentence = language_tool_python.utils.correct(sentence, matches)
+
+    # Tokenize and tag the sentence using spaCy
+    doc = nlp(corrected_sentence)
+
+    # Identify question word based on dependency tags and sentence structure
+    question_word = None
+    is_followed_by_noun = False
+    for i, token in enumerate(doc):
+        if token.dep_ in ('nsubj', 'dobj'):
+            # Noun subject or object (who/what)
+            question_word = "Who" if token.pos_ == 'PRON' else "What"
+        elif token.dep_ == 'advmod':
+            # Adverbial modifier (when/where/how)
+            if token.text in ('when', 'how long'):
+                question_word = "When"
+            elif token.text in ('where', 'in what place'):
+                question_word = "Where"
+            elif token.text in ('how', 'in what way'):
+                question_word = "How"
+        elif token.dep_ == 'ROOT' and token.pos_ == 'VERB':
+            # Special case for sentences starting with a verb (Do/Does/Did)
+            if token.text.lower() in ('do', 'does'):
+                question_word = "Do" if token.text.lower() == 'do' else "Does"
+            elif token.text.lower() == 'did':
+                question_word = "Did"
+        elif token.text == "is" and i + 1 < len(doc) and doc[i + 1].pos_ in ("NOUN", "PROPN"):
+            is_followed_by_noun = True
+            # Special case for "is + noun phrase"
+            question_word = "What"
+
+        if question_word:
+            break
+
+    # Identify the verb (considering auxiliary verbs)
+    verb = None
+    for token in doc:
+        if token.pos_ in ('VERB', 'AUX'):
+            verb = token.text
+            break
+
+    # Rearrange the sentence to form a question (handle different cases)
+    if question_word and verb:
+        if is_followed_by_noun:
+            question = f"{question_word} {verb} {doc[i + 1].text}?"  # Use noun phrase after "is"
+        elif question_word in ('Do', 'Does', 'Did'):
+            question = f"{question_word} {' '.join(token.text for token in doc[1:])}?"  # Handle sentences starting with a verb
+        else:
+            question = f"{question_word} {verb} {corrected_sentence.split(verb, 1)[1].strip()}?"
+        return question
+    else:
+        return None
