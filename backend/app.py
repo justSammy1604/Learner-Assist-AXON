@@ -10,6 +10,7 @@ from collections import Counter
 import numpy as np
 import language_tool_python
 
+
 app = Flask(__name__)
 cors = CORS(app)
 
