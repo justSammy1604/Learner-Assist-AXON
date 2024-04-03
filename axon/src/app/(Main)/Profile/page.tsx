@@ -9,7 +9,7 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import { initializeApp } from 'firebase/app';
 import { Database, getDatabase } from 'firebase/database';
-import { firebaseConfig } from '../../../firebase/firebaseconfig'
+import { firebaseConfig } from '../../../../firebase/firebaseconfig'
 
 interface Course {
   name: string;

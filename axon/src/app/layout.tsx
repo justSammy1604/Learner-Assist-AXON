@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Nav from "@/components/nav";
+import ClientProvider from "@/components/clientProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,11 +16,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`dark bg-neutral-900 text-white ${inter.className}`}>
-        {children}
-        <Nav/>
-      </body>
-    </html>
+    <ClientProvider>
+      <html lang="en">
+        <body className={`dark bg-neutral-900 text-white  ${inter.className}`}>
+
+
+          {children}
+
+        </body>
+      </html>
+    </ClientProvider>
   );
 }

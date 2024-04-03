@@ -16,7 +16,7 @@ def searchCourse():
     # Else ask the user if they want to add a new course
 
     return {
-        "present": True,
+        "present": False,
         "courses": [
             {"name": "English", "code": "5323he"},
             {"name": "Science", "code": "eury3wye"},
