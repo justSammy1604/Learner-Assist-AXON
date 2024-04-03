@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 
@@ -5,9 +6,11 @@ import { Input } from "@/components/ui/input";
 export default function Home() {
   return (
     <main>
-      <Input placeholder="dfgdfgh"/>
-      <Input type="file" placeholder="dfgdfgh"/>
-    
+      <div className="p-8">
+        <Input placeholder="dfgdfgh" />
+        
+        <Button className="w-full h-12 text-lg">Search</Button>
+      </div>
     </main>
   );
 }
