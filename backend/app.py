@@ -1,3 +1,4 @@
+import json
 from flask import Flask, request
 from flask_cors import CORS
 from time import sleep
@@ -8,11 +9,12 @@ cors = CORS(app)
 
 @app.route("/search")
 def searchCourse():
-    #The user enters the course that he/she want to learn about
-    #Checks if the course is present . 
-        # If present then return the course data/stuff
-        #Else ask the user if they want to add a new course
-    
+    query = request.args.get("query")
+    # The user enters the course that he/she want to learn about
+    # Checks if the course is present .
+    # If present then return the course data/stuff
+    # Else ask the user if they want to add a new course
+
     return {
         "present": True,
         "courses": [
@@ -21,13 +23,22 @@ def searchCourse():
         ],
     }
 
-@app.route('/createCourse')
-def createCourse():
-    #The user selects the "Create Course" option
-    #The system asks the new course name
-    #User enters the new course name 
-    return {"result":'courseID'}
 
+@app.route("/createCourse")
+def createCourse():
+    file = request.files['file']
+    # fileType
+    # if file is txt read directly else parse properly
+
+    return {"result": "courseID"}
+
+
+@app.route("/courseData", methods=["GET"])
+def courseData():
+    Course = {"name": "string", "topics": ["topic1", "topic2"], "code": "string"}
+    Course["code"] = request.args.get("code")
+
+    return json.dumps(Course)
 
 
 if __name__ == "__main__":
