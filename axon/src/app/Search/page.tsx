@@ -32,7 +32,16 @@ export default function Home() {
   }
   return (
     <main>
-    Home
+      <div className="p-8 space-y-2">
+        <Input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="h-12 " placeholder="Enter Topic" />
+        <Button disabled={searchQuery === ""} onClick={search} className={`w-full h-12 text-lg space-x-3  ${isFetching ? "animate-pulse" : ""}`}><span>Search</span> {isFetching && <SvgSpinnersRingResize />}</Button>
+      </div>
+      <div className="px-8">
+        {courses!==false?courses.map((course) =>
+          <CourseCard courseCode={course.code} courseName={course.name} />
+        ):"No Courses Found"
+        }
+      </div>
     </main>
   );
 }

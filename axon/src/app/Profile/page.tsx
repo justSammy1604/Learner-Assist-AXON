@@ -32,7 +32,7 @@ export default function Home() {
   }
   return (
     <main>
-    Home
+      Profile
     </main>
   );
 }
