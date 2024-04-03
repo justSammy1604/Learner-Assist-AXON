@@ -6,7 +6,5 @@ def yt_recommend():
 
     results = videosSearch.result()
 
-    for video in results['result']:
-        video_url = video['link']
-        video_title=video['title']
-        return (video_url,video_title)
+    video_url = [{'url':video['link'],'title':video['title']} for video in results['result']]
+    return(video_url)

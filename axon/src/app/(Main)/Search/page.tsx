@@ -8,8 +8,6 @@ import { useState } from "react";
 
 
 
-
-
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState<string>("")
   const [isFetching, setIsFetching] = useState(false)
