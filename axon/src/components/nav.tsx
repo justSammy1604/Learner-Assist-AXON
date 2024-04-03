@@ -1,6 +1,4 @@
 'use client'
-import { signOut } from "next-auth/react";
-import { Button } from "./ui/button";
 import { IoHome } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 import { FaTrophy } from "react-icons/fa";
