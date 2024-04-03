@@ -114,3 +114,9 @@ def convert_to_question(sentence):
         return question
     else:
         return None
+
+question = convert_to_question(sent_doc)
+if question:
+  print(f"Converted Question: {question}")
+else:
+  print("Unable to convert the sentence into a question.")
