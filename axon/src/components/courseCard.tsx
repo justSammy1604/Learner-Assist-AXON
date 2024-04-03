@@ -4,8 +4,5 @@ import Link from "next/link";
 
 
 export default function CourseCard(params: { courseName: string, courseCode: string }) {
-    return <Link href={`${config.server}/course` + new URLSearchParams({
-        courseCode: params.courseCode
-    })}>{params.courseName}</Link>
-
+    return <Link className="block w-full  hover:underline  " href={`/Course/${params.courseCode}`}>{params.courseName}</Link>
 }
