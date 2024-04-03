@@ -35,7 +35,7 @@ def createCourse():
 
 @app.route("/courseData", methods=["GET"])
 def courseData():
-    Course = {"name": "string", "topics": ["topic1", "topic2"], "code": "string"}
+    Course = {"name": "Operating Systems", "topics": ["registers", "busses"], "code": "OSX034"}
     Course["code"] = request.args.get("code")
 
     return json.dumps(Course)
