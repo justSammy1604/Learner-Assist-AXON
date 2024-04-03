@@ -6,12 +6,12 @@ from chromadb.utils import embedding_functions
 from chromadb.utils.embedding_functions import OpenAIEmbeddingFunction
 # from chromadb.utils.text_splitter import CharacterTextSplitter
 # from chromadb.utils.prompt_templates import PROMPT_TEMPLATE_SIMPLE_TEXT
-from chromadb import Collection
+from chromadb import PersistentClient
 
-client = chromadb.Client()
+client = chromadb.PersistentClient(path="public/vector")
 
 sentence_transformer_ef = embedding_functions.SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L12-v2")
-collection = client.create_collection(name='specs',embedding_function=sentence_transformer_ef,metadata={'hnsw:space':'cosine'})
+# collection = client.create_collection(name='specs',embedding_function=sentence_transformer_ef,metadata={'hnsw:space':'cosine'})
 
 # client.delete_collection(name='specs')
 
