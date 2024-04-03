@@ -14,14 +14,23 @@ def searchCourse():
     # Checks if the course is present .
     # If present then return the course data/stuff
     # Else ask the user if they want to add a new course
+    if query > 0.3:
+        return {
+            "present": True,
+            "courses": [
+                {"name": "English", "code": "5323he"},
+                {"name": "Science", "code": "eury3wye"},
+            ],
+        }
+    else:
+        return {
+            "present": False,
+            # "courses": [
+                # {"name": "English", "code": "5323he"},
+                # {"name": "Science", "code": "eury3wye"},
+            # ],
+        }
 
-    return {
-        "present": True,
-        "courses": [
-            {"name": "English", "code": "5323he"},
-            {"name": "Science", "code": "eury3wye"},
-        ],
-    }
 
 
 @app.route("/createCourse")
