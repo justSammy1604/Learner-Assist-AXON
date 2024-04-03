@@ -21,19 +21,28 @@ txt = "Fractals are complex geometric shapes that exhibit self-similarity at dif
 # Process the text to obtain a Doc object
 doc = nlp(txt)
 
+"""
+input: This is a sunny day. It is very hot today
+sentences: string|list
+ouput: This is a sunny day.,It is very hot today.,
+"""
 # Extract sentences from the Doc object
 sentences = [sent.text for sent in doc.sents]
 
 # Calculate similarities between each sentence and each topic
-similarities = []
-for sentence in sentences:
-    sent_doc = nlp(sentence)
-    for topic in topics:
-      topic_doc = nlp(topic)
-      sim_score = sent_doc.similarity(topic_doc)
-    avg_sim_score = np.mean(sim_score)  
-    similarities.append((sentence, topic, sim_score))
+"""
+similarites: integer|list
+"""
 
+def similarity_scores()
+  similarities = []
+  for sentence in sentences:
+      sent_doc = nlp(sentence)
+      for topic in topics:
+        topic_doc = nlp(topic)
+        sim_score = sent_doc.similarity(topic_doc)
+  avg_sim_score = np.mean(sim_score)  
+  similarities.append((sentence, topic, sim_score))
 # Print the similarity scores
 for sentence, topic, similarity_score in similarities:
     print(f"Similarity Score: {similarity_score}")
