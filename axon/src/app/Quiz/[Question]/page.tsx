@@ -1,14 +1,24 @@
 'use client'
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-
+import { motion } from 'framer-motion'
 
 export default function Page() {
+    
     const options = [
         "Library", "Framework", "Plugin", "App"
     ]
     const [selectedOption, setSelectedOption] = useState<string | null>("App")
     return <div>
+        <div className="px-8 pt-6 ">
+            <div className="w-full h-8 bg-neutral-950 rounded-full p-0.5 ">
+                <motion.div initial={{ width: "0%" }} animate={{ width: "60%" }} transition={{ duration: 0.4 }} className="h-full transition-all bg-orange-400 rounded-full pt-1.5 px-4">
+                    <div className="w-full h-1 bg-white/20 rounded-full" />
+                </motion.div>
+            </div>
+
+        </div>
+
         <div className="p-8">
             <h1 className="text-2xl font-black">What is React?</h1>
         </div>

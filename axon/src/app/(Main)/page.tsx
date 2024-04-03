@@ -9,6 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 
 
@@ -25,7 +26,6 @@ export default function Home() {
       <div className="mt-2  pb-12">
         <h3 className="font-medium ">Topics You Will Learn</h3>
         <ul className=" text-sm ">
-      
           <li>
             Topic 1
           </li>
@@ -36,7 +36,7 @@ export default function Home() {
 
       </div>
       <div>
-        <Button className="w-full py-6">Start Quiz</Button>
+        <Link href={'/Quiz/2132'} className="w-full py-3 bg-orange-400 block p-4 rounded-md hover:bg-orange-300  ">Start Quiz</Link>
       </div>
     </main>
   );
