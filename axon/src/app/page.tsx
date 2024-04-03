@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { config } from "@/config";
 import { useState } from "react";
-
+import Nav from '../components/nav'
 
 
 
@@ -42,8 +42,6 @@ export default function Home() {
           <CourseCard courseCode={course.code} courseName={course.name} />
         ):"No Courses Found"
         }
-
-
       </div>
     </main>
   );
