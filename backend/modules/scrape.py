@@ -26,6 +26,3 @@ def scrape(search):
     content_text= content_div.getText()
     
     return(title,content_text)
-
-
-
