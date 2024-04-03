@@ -2,8 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { motion } from 'framer-motion'
+import { MaterialSymbolsArrowBackRounded, MaterialSymbolsFavoriteRounded } from "@/components/icons";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+    const router = useRouter()
     const [currentQuestion, setCurrentQuestion] = useState(0)
     const [isComplete, setCompleted] = useState(false)
     const mcq = {
@@ -41,13 +44,20 @@ export default function Page() {
     const [selectedOption, setSelectedOption] = useState<string | null>("App")
     return <div>
         <div className="px-8 pt-6 flex items-center  justify-between gap-2 ">
+            <button onClick={() => router.back()} className=" text-xl  p-1.5  hover:bg-white/10 rounded-full">
+                <MaterialSymbolsArrowBackRounded />
+            </button>
             <div className="w-full h-8 bg-neutral-950 rounded-full p-0.5 ">
-                <div style={{ width: `${((currentQuestion + 1) / mcq.questions.length) * 100}%` }} className="h-full transition-all duration-500 ease-in-out bg-orange-400 rounded-full pt-1.5 px-4">
+                <div style={{ width: `${((currentQuestion + 1) / mcq.questions.length) * 100}%` }} className="h-full transition-all  duration-700  ease-in-out bg-orange-400 rounded-full pt-1.5 px-4">
                     <div className="w-full h-1 bg-white/20 rounded-full" />
                 </div>
             </div>
-            <div className="h-8 w-8 bg-white rounded-full">
-
+            <div className="h-8 w-40  rounded-full relative flex">
+                <MaterialSymbolsFavoriteRounded className="text-3xl text-rose-600" />
+                <MaterialSymbolsFavoriteRounded className="text-3xl text-rose-600" />
+                <MaterialSymbolsFavoriteRounded className="text-3xl text-rose-600" />
+                <MaterialSymbolsFavoriteRounded className="text-3xl text-neutral-300/10" />
+                <MaterialSymbolsFavoriteRounded className="text-3xl text-neutral-300/10" />
             </div>
         </div>
 
