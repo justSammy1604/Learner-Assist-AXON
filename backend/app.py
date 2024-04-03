@@ -8,7 +8,11 @@ cors = CORS(app)
 
 @app.route("/search")
 def searchCourse():
-    sleep(5)
+    #The user enters the course that he/she want to learn about
+    #Checks if the course is present . 
+        # If present then return the course data/stuff
+        #Else ask the user if they want to add a new course
+    
     return {
         "present": True,
         "courses": [
@@ -17,10 +21,13 @@ def searchCourse():
         ],
     }
 
-
-@app.route("/createCourse")
+@app.route('/createCourse')
 def createCourse():
-    return {"result": "courseID"}
+    #The user selects the "Create Course" option
+    #The system asks the new course name
+    #User enters the new course name 
+    return {"result":'courseID'}
+
 
 
 if __name__ == "__main__":
