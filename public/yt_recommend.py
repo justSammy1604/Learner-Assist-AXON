@@ -1,10 +1,12 @@
 from youtubesearchpython import VideosSearch
 
-videosSearch = VideosSearch('Permutations', limit=5)
 
-results = videosSearch.result()
+def yt_recommend():
+    videosSearch = VideosSearch('Permutations', limit=5)
 
-for video in results['result']:
-    video_url = video['link']
-    print(video['title'])
-    print(video_url)
+    results = videosSearch.result()
+
+    for video in results['result']:
+        video_url = video['link']
+        video_title=video['title']
+        return (video_url,video_title)
