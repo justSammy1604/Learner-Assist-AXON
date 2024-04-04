@@ -14,6 +14,67 @@ from modules.grammer import convert_to_question
 app = Flask(__name__)
 cors = CORS(app)
 
+if __name__ == "__main__":
+    topics = [
+        "Physics",
+        "Chemistry",
+        "Biology",
+        "Mathematics",
+        "Computer Science",
+        "Medicine",
+        "Art History",
+        "Computer Science & Information Technology",
+        "Law",
+        "Statistics",
+    ]
+    client = chromadb.PersistentClient(path="public/vector")
+    sentence_transformer_ef = embedding_functions.SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L12-v2")
+
+    MCQsCollection = client.get_or_create_collection(name="MCQ",embedding_function=sentence_transformer_ef,metadata={'hnsw:space':'cosine'})
+    CourseCollection = client.get_or_create_collection(name="CourseCollection",embedding_function=sentence_transformer_ef,metadata={'hnsw:space':'cosine'})
+#     MCQsCollection.add(
+#     documents=["This is a document"],
+#     metadatas=[{"question": "my_source","summary":"this is a asummary","options":"Apple,Pear,PineApple,Peach","correct":0}],
+#     ids=["id1"]
+# )
+#     CourseCollection.add(
+#         documents=["Operating Systems", "Modern Networks", "Graphics", "Image Processing", "Data Structures", "Algorithms"],
+#         metadatas=[
+#             {"code": "OS1","name":"operating systems","summary":"Operating systems are software that manage computer hardware and software resources and provide services for computer programs."},
+#             {"code": "MN1","name":"modern networks","summary":"Modern networks refer to computer networks that use advanced technologies such as cloud computing, virtualization, and software-defined networking."},
+#             {"code": "GR1","name":"graphics","summary":"Graphics refer to visual images or designs on some surface, such as a wall, canvas, screen, paper, or stone."},
+#             {"code": "IP1","name":"image processing","summary":"Image processing is a method to perform some operations on an image to get an enhanced image or to extract some useful information from it."},
+#             {"code": "DS1","name":"data structures","summary":"Data structures are a way of organizing and storing data so that it can be used efficiently."},
+#             {"code": "AL1","name":"algorithms","summary":"Algorithms are a set of instructions or rules that are followed to solve a problem."}
+#         ],
+#         ids=["OS1", "MN1", "GR1", "IP1", "DS1", "AL1"]
+#     )
+#     CourseCollection.add(
+#     documents=["Physics", "Chemistry", "Biology", "Computer Science", "Medical Sciences", "Medicine", "Religion", "Art History", "Music", "Computer Science & Information Technology", "Entrepreneurship", "Law", "Legal Theory", "Civil Law", "Criminal Law", "International Law"],
+#     metadatas=[
+#         {"code": "PHY1","name":"physics","summary":"Physics is the study of matter, energy, and the fundamental forces of nature."},
+#         {"code": "CH1","name":"chemistry","summary":"Chemistry is the study of the composition, structure, properties, and reactions of matter."},
+#         {"code": "BIO1","name":"biology","summary":"Biology is the study of living organisms, including their structure, function, growth, origin, evolution, and distribution."},
+#         {"code": "CS1","name":"computer science","summary":"Computer science is the study of computers and computational systems. It includes the design and analysis of algorithms, programming languages, and hardware systems."},
+#         {"code": "MS1","name":"medical sciences","summary":"Medical sciences are the scientific study of the human body and its diseases and disorders."},
+#         {"code": "MED1","name":"medicine","summary":"Medicine is the science and practice of the diagnosis, treatment, and prevention of disease."},
+#         {"code": "REL1","name":"religion","summary":"Religion is a cultural system of designated behaviors and practices, morals, beliefs, worldviews, texts, sanctified places, prophecies, ethics, or organizations."},
+#         {"code": "AH1","name":"art history","summary":"Art history is the study of objects of art in their historical development and stylistic contexts."},
+#         {"code": "MUS1","name":"music","summary":"Music is an art form and cultural activity whose medium is sound organized in time."},
+#         {"code": "CSIT1","name":"computer science & information technology","summary":"Computer science and information technology are fields that deal with computing technology and the use of computers to process, store, and transmit information."},
+#         {"code": "ENTR1","name":"entrepreneurship","summary":"Entrepreneurship is the process of designing, launching, and running a new business."},
+#         {"code": "LAW1","name":"law","summary":"Law is a system of rules created and enforced through social or governmental institutions to regulate behavior."},
+#         {"code": "LT1","name":"legal theory","summary":"Legal theory is the study and interpretation of the principles and concepts that underlie the legal system."},
+#         {"code": "CL1","name":"civil law","summary":"Civil law is a legal system originating in continental Europe and adopted in much of the world."},
+#         {"code": "CRL1","name":"criminal law","summary":"Criminal law is the body of law that relates to crime."},
+#         {"code": "IL1","name":"international law","summary":"International law is the set of rules generally regarded and accepted as binding in relations between states and nations."}
+#     ],
+#     ids=["PHY1", "CH1", "BIO1", "CS1", "MS1", "MED1", "REL1", "AH1", "MUS1", "CSIT1", "ENTR1", "LAW1", "LT1", "CL1", "CRL1", "IL1"]
+# )
+
+    nlp = spacy.load("en_core_web_sm")
+    app.run(debug=True)
+
 
 @app.route("/search")
 def searchCourse():
@@ -161,63 +222,3 @@ def courseData():
     return jsonify(Course)
 
 
-if __name__ == "__main__":
-    topics = [
-        "Physics",
-        "Chemistry",
-        "Biology",
-        "Mathematics",
-        "Computer Science",
-        "Medicine",
-        "Art History",
-        "Computer Science & Information Technology",
-        "Law",
-        "Statistics",
-    ]
-    client = chromadb.PersistentClient(path="public/vector")
-    sentence_transformer_ef = embedding_functions.SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L12-v2")
-
-    MCQsCollection = client.get_or_create_collection(name="MCQ",embedding_function=sentence_transformer_ef,metadata={'hnsw:space':'cosine'})
-    CourseCollection = client.get_or_create_collection(name="CourseCollection",embedding_function=sentence_transformer_ef,metadata={'hnsw:space':'cosine'})
-#     MCQsCollection.add(
-#     documents=["This is a document"],
-#     metadatas=[{"question": "my_source","summary":"this is a asummary","options":"Apple,Pear,PineApple,Peach","correct":0}],
-#     ids=["id1"]
-# )
-#     CourseCollection.add(
-#         documents=["Operating Systems", "Modern Networks", "Graphics", "Image Processing", "Data Structures", "Algorithms"],
-#         metadatas=[
-#             {"code": "OS1","name":"operating systems","summary":"Operating systems are software that manage computer hardware and software resources and provide services for computer programs."},
-#             {"code": "MN1","name":"modern networks","summary":"Modern networks refer to computer networks that use advanced technologies such as cloud computing, virtualization, and software-defined networking."},
-#             {"code": "GR1","name":"graphics","summary":"Graphics refer to visual images or designs on some surface, such as a wall, canvas, screen, paper, or stone."},
-#             {"code": "IP1","name":"image processing","summary":"Image processing is a method to perform some operations on an image to get an enhanced image or to extract some useful information from it."},
-#             {"code": "DS1","name":"data structures","summary":"Data structures are a way of organizing and storing data so that it can be used efficiently."},
-#             {"code": "AL1","name":"algorithms","summary":"Algorithms are a set of instructions or rules that are followed to solve a problem."}
-#         ],
-#         ids=["OS1", "MN1", "GR1", "IP1", "DS1", "AL1"]
-#     )
-#     CourseCollection.add(
-#     documents=["Physics", "Chemistry", "Biology", "Computer Science", "Medical Sciences", "Medicine", "Religion", "Art History", "Music", "Computer Science & Information Technology", "Entrepreneurship", "Law", "Legal Theory", "Civil Law", "Criminal Law", "International Law"],
-#     metadatas=[
-#         {"code": "PHY1","name":"physics","summary":"Physics is the study of matter, energy, and the fundamental forces of nature."},
-#         {"code": "CH1","name":"chemistry","summary":"Chemistry is the study of the composition, structure, properties, and reactions of matter."},
-#         {"code": "BIO1","name":"biology","summary":"Biology is the study of living organisms, including their structure, function, growth, origin, evolution, and distribution."},
-#         {"code": "CS1","name":"computer science","summary":"Computer science is the study of computers and computational systems. It includes the design and analysis of algorithms, programming languages, and hardware systems."},
-#         {"code": "MS1","name":"medical sciences","summary":"Medical sciences are the scientific study of the human body and its diseases and disorders."},
-#         {"code": "MED1","name":"medicine","summary":"Medicine is the science and practice of the diagnosis, treatment, and prevention of disease."},
-#         {"code": "REL1","name":"religion","summary":"Religion is a cultural system of designated behaviors and practices, morals, beliefs, worldviews, texts, sanctified places, prophecies, ethics, or organizations."},
-#         {"code": "AH1","name":"art history","summary":"Art history is the study of objects of art in their historical development and stylistic contexts."},
-#         {"code": "MUS1","name":"music","summary":"Music is an art form and cultural activity whose medium is sound organized in time."},
-#         {"code": "CSIT1","name":"computer science & information technology","summary":"Computer science and information technology are fields that deal with computing technology and the use of computers to process, store, and transmit information."},
-#         {"code": "ENTR1","name":"entrepreneurship","summary":"Entrepreneurship is the process of designing, launching, and running a new business."},
-#         {"code": "LAW1","name":"law","summary":"Law is a system of rules created and enforced through social or governmental institutions to regulate behavior."},
-#         {"code": "LT1","name":"legal theory","summary":"Legal theory is the study and interpretation of the principles and concepts that underlie the legal system."},
-#         {"code": "CL1","name":"civil law","summary":"Civil law is a legal system originating in continental Europe and adopted in much of the world."},
-#         {"code": "CRL1","name":"criminal law","summary":"Criminal law is the body of law that relates to crime."},
-#         {"code": "IL1","name":"international law","summary":"International law is the set of rules generally regarded and accepted as binding in relations between states and nations."}
-#     ],
-#     ids=["PHY1", "CH1", "BIO1", "CS1", "MS1", "MED1", "REL1", "AH1", "MUS1", "CSIT1", "ENTR1", "LAW1", "LT1", "CL1", "CRL1", "IL1"]
-# )
-
-    nlp = spacy.load("en_core_web_sm")
-    app.run(debug=True)

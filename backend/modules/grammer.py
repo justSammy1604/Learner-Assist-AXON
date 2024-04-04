@@ -1,6 +1,7 @@
 import spacy
 import numpy as np
-import language_tool_python
+# import language_tool_python
+from gramformer import Gramformer
 
 
 
@@ -22,20 +23,21 @@ def similarity_scores():
     similarities.append((sentence, topic, sim_score))
 
 
-"""
-convert_to_questions: function|text
-Converts a sentence into a question based on the English format
-input: Fractals are complex geometric shapes that exhibit self-similarity at different scales
-output: What are complex geometric shapes that exhibit self-similarity at different scales
-"""
+# """
+# convert_to_questions: function|text
+# Converts a sentence into a question based on the English format
+# input: Fractals are complex geometric shapes that exhibit self-similarity at different scales
+# output: What are complex geometric shapes that exhibit self-similarity at different scales
+# """
+gf = Gramformer(models = 1, use_gpu=True) # 1=corrector, 2=detector
 
 def convert_to_question(sentence):
     nlp= spacy.load('en_core_web_sm')
-    tool = language_tool_python.LanguageTool('en-US')
+    # tool = language_tool_python.LanguageTool('en-US')
     # Check for grammar errors and correct the sentence
-    matches = tool.check(sentence)
-    corrected_sentence = language_tool_python.utils.correct(sentence, matches)
-
+    # matches = tool.check(sentence)
+    corrected_sentence = gf.correct(sentence)
+    print(corrected_sentence)
     # Tokenize and tag the sentence using spaCy
     doc = nlp(corrected_sentence)
 
