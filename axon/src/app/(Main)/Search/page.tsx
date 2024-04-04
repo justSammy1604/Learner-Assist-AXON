@@ -12,6 +12,7 @@ import { useState } from "react";
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState<string>("")
   const [isFetching, setIsFetching] = useState(false)
+  const [isPresent, setIsPresent] = useState(0)
   const [courses, setCourses] = useState<Array<{
     name: string,
     code: string
@@ -23,6 +24,7 @@ export default function Home() {
     }))
       .then(resp => resp.json())
       .then(d => {
+        setIsPresent(d.present)
         setCourses(d.courses)
         console.log(d)
         setIsFetching(false)
@@ -37,7 +39,7 @@ export default function Home() {
       </div>
       <div className="px-8">
         <div className=" h-64 overflow-y-scroll">
-           {courses !== false ? courses.map((course) =>
+          {isPresent === 1 ? courses.map((course) =>
           <CourseCard courseCode={course.code} courseName={course.name} />
           ) : "No Courses Found"
         }

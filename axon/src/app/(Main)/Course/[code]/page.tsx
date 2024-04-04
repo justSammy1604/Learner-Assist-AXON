@@ -8,8 +8,8 @@ export default function Page({ params }: { params: { code: string } }) {
     const [courseData, setCourseData] = useState<{ name: string, topics: Array<string>, code: string } | null>(null)
 
     useEffect(() => {
-        fetch(`${config.server}/courseData?` + new URLSearchParams({
-            code: params.code
+        fetch(`${config.server}/CreateMCQ?` + new URLSearchParams({
+            query: params.code
         })).then(resp => resp.json())
             .then(d => setCourseData(d))
     }, [])

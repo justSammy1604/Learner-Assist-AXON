@@ -158,8 +158,8 @@ def convert_to_question(sentence:str):
     
     return {
         "question":parse2[0],
-            "answers":nounsCollection.query(noun,
-            "correct":noun
+        "answers":nounsCollection.query(query_texts=noun,n_results=3)['metadatas'].extend([noun]),
+        "correct":noun
     }
 
 
