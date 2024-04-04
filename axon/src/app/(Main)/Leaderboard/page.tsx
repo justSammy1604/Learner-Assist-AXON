@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
 import { db } from "@/app/firebase/confing";
+import { FaTrophy } from "react-icons/fa";
 import {
   collection,
   query,
@@ -10,6 +11,7 @@ import {
 
 interface User {
   username: string;
+  email: string;
   level: number;
 }
 
@@ -22,8 +24,18 @@ export default function Home() {
         const usersRef = collection(db, "users");
         const q = query(usersRef, orderBy("level", "desc"));
         const querySnapshot = await getDocs(q);
-        const userData = querySnapshot.docs.map((doc) => doc.data() as User);
-        setUserData(userData);
+        const userDataMap: Record<string, User> = {};
+
+        querySnapshot.forEach((doc) => {
+          const data = doc.data() as User;
+          // Group users by email and keep only the highest level for each email
+          if (!userDataMap[data.username] || userDataMap[data.username].level < data.level) {
+            userDataMap[data.username] = data;
+          }
+        });
+
+        const uniqueUserData = Object.values(userDataMap);
+        setUserData(uniqueUserData);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -56,13 +68,18 @@ export default function Home() {
 
   return (
     <main>
-      Leaderboard
+      <div className=" flex p-9 text-4xl gap-4 ">
+        <p className=" flex text-4xl text-yellow-400 ">Leaderboard </p><FaTrophy className="text-yellow-400" />
+      </div>
       {/* Display user data */}
+      <div className=" px-10 flex flex-col gap-8">
       {userData.map((user, index) => (
-        <div key={index}>
-          <p>{user.username}: {user.level}</p>
+        <div className=" bg-slate-600 rounded-2xl flex justify-between" key={index}>
+          <a className=" p-4">{user.email}</a>
+          <a className=" p-4">{user.level}</a>
         </div>
       ))}
+      </div>
     </main>
   );
 }
