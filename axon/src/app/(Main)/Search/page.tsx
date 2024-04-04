@@ -4,6 +4,7 @@ import { SvgSpinnersRingResize } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { config } from "@/config";
+import Link from "next/link";
 import { useState } from "react";
 
 
@@ -35,10 +36,15 @@ export default function Home() {
         <Button disabled={searchQuery === ""} onClick={search} className={`w-full h-12 text-lg space-x-3  ${isFetching ? "animate-pulse" : ""}`}><span>Search</span> {isFetching && <SvgSpinnersRingResize />}</Button>
       </div>
       <div className="px-8">
-        {courses!==false?courses.map((course) =>
+        <div className=" h-64 overflow-y-scroll">
+           {courses !== false ? courses.map((course) =>
           <CourseCard courseCode={course.code} courseName={course.name} />
-        ):"No Courses Found"
+          ) : "No Courses Found"
         }
+        </div>
+       
+        <hr className="my-3 w-2/3 border-white/10"/>
+        <Link className="text-orange-400 hover:underline" href={"/Create"} >Create Another Course</Link>
       </div>
     </main>
   );

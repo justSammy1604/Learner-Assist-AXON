@@ -10,18 +10,17 @@ export default function Page({ params }: { params: { code: string } }) {
     useEffect(() => {
         fetch(`${config.server}/courseData?` + new URLSearchParams({
             code: params.code
-        })).then(resp=>resp.json())
-        .then(d=>setCourseData(d))
-
+        })).then(resp => resp.json())
+            .then(d => setCourseData(d))
     }, [])
-    if(courseData===null){
+    if (courseData === null) {
         return <div>Loading ..</div>
     }
     return <div className="">
         <h1 className="text-xl border-b p-4">{courseData.name}</h1>
-        <h3>Topics+</h3>
+        <h3>Topics</h3>
         <div>
-            {courseData.topics.map(d=><div>{d}</div>)}
+            {courseData.topics.map(d => <div>{d}</div>)}
         </div>
     </div>
 }

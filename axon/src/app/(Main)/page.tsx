@@ -10,12 +10,16 @@ import {
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import useGameStore from "@/components/state";
+import { useRouter } from "next/navigation";
 
 
 
 
 export default function Home() {
+  const router=useRouter()
   const [currentCourse, setCurrentCourse] = useState<string | null>(null)
+  const {playerLives}=useGameStore()
   useEffect(() => {
     setCurrentCourse(localStorage.getItem('currentCourse'))
   }, [])
@@ -36,7 +40,7 @@ export default function Home() {
 
       </div>
       <div>
-        <Link href={'/Quiz/2132'} className="w-full py-3 bg-orange-400 block p-4 rounded-md hover:bg-orange-300  ">Start Quiz</Link>
+        <Button disabled={playerLives===0} onClick={()=>router.push('/Quiz/2132')} className="w-full py-3 bg-orange-400  h-16 text-lg p-4 rounded-md hover:bg-orange-300  ">Start Quiz</Button>
       </div>
     </main>
   );
