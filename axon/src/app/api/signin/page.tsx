@@ -20,8 +20,8 @@ export default function Page() {
          
           
           <Button
-            className="w-full py-8 mt-2 space-x-2"
-   onClick={() => signIn("google")}
+            className=" w-auto"
+   onClick={() => signIn("google",{ callbackUrl: 'http://localhost:3000/' })}
           >
             <span  className="text-md ">Sign In With Google</span> <LogosGoogleIcon/>
           </Button>
