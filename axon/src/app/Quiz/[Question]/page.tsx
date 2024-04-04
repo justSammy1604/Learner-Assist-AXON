@@ -63,7 +63,7 @@ export default function Page({ params }: { params: { Question: string } }) {
                 console.log(d)
                 setMCQ(d)
             })
-    }, [])
+    }, [params.Question])
     const checkQuestion = () => {
         if (currentQuestion === (mcq.question.length - 1)) {
             setGameOver(true)
@@ -150,7 +150,7 @@ export default function Page({ params }: { params: { Question: string } }) {
             <h1 className="text-2xl font-black">{mcq.question[currentQuestion].question}</h1>
         </div>
         <div className="grid grid-cols-2 gap-2  px-8">
-            {mcq.question[currentQuestion].options.split(",").map((option, i) => <><Button disabled={goNextState} onClick={() => option !== selectedOption ? setSelectedOption(option) : setSelectedOption(null)} className={`${selectedOption === option ? "border-b-4 border-l-4 bg-orange-300" : "hover:bg-orange-300  hover:border-b-4 hover:border-l-4 bg-orange-400"} ${(selectedOption === option) && (currentResult === 0) ? "bg-red-500 border-red-700" : "border-orange-500 "} h-16  active:bg-orange-300   rounded-bl-xl   relative`}>
+            {mcq.question[currentQuestion].options.split(",").map((option:any, i:any) => <><Button disabled={goNextState} onClick={() => option !== selectedOption ? setSelectedOption(option) : setSelectedOption(null)} className={`${selectedOption === option ? "border-b-4 border-l-4 bg-orange-300" : "hover:bg-orange-300  hover:border-b-4 hover:border-l-4 bg-orange-400"} ${(selectedOption === option) && (currentResult === 0) ? "bg-red-500 border-red-700" : "border-orange-500 "} h-16  active:bg-orange-300   rounded-bl-xl   relative`}>
                 {option}
             </Button>
             </>)}

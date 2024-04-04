@@ -39,8 +39,8 @@ export default function Home() {
       </div>
       <div className="px-8">
         <div className=" h-64 overflow-y-scroll">
-          {isPresent === 1 ? courses.map((course) =>
-          <CourseCard courseCode={course.code} courseName={course.name} />
+          {(isPresent === 1) ? (courses!==false)&&courses?.map((course) =>
+          <CourseCard key={course.code} courseCode={course.code} courseName={course.name} />
           ) : "No Courses Found"
         }
         </div>

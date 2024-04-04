@@ -12,7 +12,7 @@ export default function Page({ params }: { params: { code: string } }) {
             query: params.code
         })).then(resp => resp.json())
             .then(d => setCourseData(d))
-    }, [])
+    }, [params.code])
     if (courseData === null) {
         return <div>Loading ..</div>
     }
@@ -20,7 +20,7 @@ export default function Page({ params }: { params: { code: string } }) {
         <h1 className="text-xl border-b p-4">{courseData.name}</h1>
         <h3>Topics</h3>
         <div>
-            {courseData.topics.map(d => <div>{d}</div>)}
+            {courseData.topics.map(d => <div key={d}>{d}</div>)}
         </div>
     </div>
 }

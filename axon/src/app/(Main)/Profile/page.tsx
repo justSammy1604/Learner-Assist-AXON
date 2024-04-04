@@ -116,7 +116,7 @@ export default function Home() {
       <div className="flex flex-col justify-center">
         <div className="flex flex-col justify-center items-center p-10 gap-5">
           <Avatar className="w-40 h-40 border-solid border-white border-4">
-            <AvatarImage src={session && session.user && session.user.image} />
+            <AvatarImage src={session?.user?.image as string} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <p>{session && session.user && session.user.name}</p>

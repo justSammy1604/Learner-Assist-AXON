@@ -11,6 +11,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { useSession } from "next-auth/react";
+import { config } from "@/config";
 
 interface User {
   username: string;

@@ -66,7 +66,7 @@ export default function Home() {
 
         </div>
         <div className=" flex flex-wrap gap-1">
-          {courses && courses.map(i => <Button type="button" className="block " onClick={() => setCurrentCourse(i.name)}>{i.name}</Button>)}
+          {courses && courses.map(i => <Button key={i.code} type="button" className="block " onClick={() => setCurrentCourse(i.name)}>{i.name}</Button>)}
         </div>
         <Button disabled={(playerLives === 0)&&(file===null)} onClick={() => currentCourse === null ? getCourses() : router.push(`/Quiz/${currentCourse}`)} className="w-full py-3 bg-orange-400  h-16 text-lg p-4 rounded-md hover:bg-orange-300  mt-4 ">
           {currentCourse === null ? "Search" : `Start ${currentCourse} Quiz`}
