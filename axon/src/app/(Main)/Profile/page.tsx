@@ -13,17 +13,18 @@ export default function Home() {
   const [name, setName] = useState<any>(null); // Initialize as null
   const [email, setEmail] = useState<any>(null); // Initialize as null
   const [image, setImage] = useState<any>(null); // Initialize as null
+  const [level, setLevel] = useState<number | null>(null); // Initialize as null for user level
+  const [achievements, setAchievements] = useState<any[]>([]); // State to store achievements
 
   useEffect(() => {
     const fetchData = async () => {
       if (session && session.user && !status) {
-        const { name, email, image } = session.user; // Destructure name, email, and image from session user data
+        const { name, email, image } = session.user;
         setName(name);
         setEmail(email);
         setImage(image);
-        setStatus(true); // Set status to true to prevent multiple executions
+        setStatus(false);
         
-        // Function to check if the user exists in the database
         const checkUserExistsInDatabase = async () => {
           try {
             const usersRef = collection(db, 'users');
@@ -32,24 +33,23 @@ export default function Home() {
             return !querySnapshot.empty;
           } catch (error) {
             console.error('Error checking user existence:', error);
-            return true; // Return true to prevent adding user in case of error
+            return false;
           }
         };
     
-        // Function to add user to the database
         const addUserToDatabase = async () => {
           try {
             await addDoc(collection(db, "users"), {
               username: name,
               email: email,
               img: image,
-              level: 2,
+              level: 2, // Set default level here if needed
               course: [{ course_id: "", course_name: "", course_progress: 0 }],
               friend: [{ friend_id: "" }],
               achievement: [
-                { achievement_id: "01", achievement_name: "super 5", achievement_description: "solve first 5 questions", achievement_status: true },
-                { achievement_id: "02", achievement_name: "super 10", achievement_description: "solve first 10 questions", achievement_status: true },
-                { achievement_id: "03", achievement_name: "super 15", achievement_description: "solve first 15 questions", achievement_status: true }
+                { achievement_id: "01", achievement_name: "super 5", achievement_description: "solve first 5 questions", achievement_status: false, achievement_img: "" },
+                { achievement_id: "02", achievement_name: "super 10", achievement_description: "solve first 10 questions", achievement_status: false, achievement_img: ""  },
+                { achievement_id: "03", achievement_name: "super 15", achievement_description: "solve first 15 questions", achievement_status: false, achievement_img: "" }
               ]
             });
             console.log("User data added to the database.");
@@ -58,20 +58,53 @@ export default function Home() {
           }
         };
     
-        // Check if the user is authenticated and not added to the database before
+        const getUserLevel = async () => {
+          try {
+            const usersRef = collection(db, 'users');
+            const q = query(usersRef, where('email', '==', email));
+            const querySnapshot = await getDocs(q);
+            if (!querySnapshot.empty) {
+              querySnapshot.forEach((doc) => {
+                const userData = doc.data();
+                setLevel(userData.level); // Set the user's level from the database
+              });
+            }
+          } catch (error) {
+            console.error('Error fetching user level:', error);
+          }
+        };
+
+        const getUserAchievements = async () => {
+          try {
+            const usersRef = collection(db, 'users');
+            const q = query(usersRef, where('email', '==', email));
+            const querySnapshot = await getDocs(q);
+            if (!querySnapshot.empty) {
+              querySnapshot.forEach((doc) => {
+                const userData = doc.data();
+                setAchievements(userData.achievement.filter((ach: any) => ach.achievement_status));
+              });
+            }
+          } catch (error) {
+            console.error('Error fetching user achievements:', error);
+          }
+        };
+
         const userDataExists = await checkUserExistsInDatabase();
         if (!userDataExists) {
-          await addUserToDatabase(); // Add user to the database if not already present
+          await addUserToDatabase();
+        } else {
+          await getUserLevel(); // Fetch user's level if user exists
+          await getUserAchievements(); // Fetch user's achievements if user exists
         }
       }
     };
-  
+
     fetchData();
-  }, [session, status]); // Dependency array ensures this effect runs only once when session or status changes
+  }, [session, status]);
 
   return (
     <main>
-      {/* Render user email if session is active */}
       <div className='flex flex-row-reverse justify-between'>
         <p className="block px-4 py-2 text-white-800 cursor-pointer" onClick={() => signOut({ callbackUrl: 'http://localhost:3000/' })}>Log out</p>
         {status && (
@@ -82,7 +115,6 @@ export default function Home() {
       </div>
       <div className="flex flex-col justify-center">
         <div className="flex flex-col justify-center items-center p-10 gap-5">
-          {/* Render avatar and email */}
           <Avatar className="w-40 h-40 border-solid border-white border-4">
             <AvatarImage src={session && session.user && session.user.image} />
             <AvatarFallback>CN</AvatarFallback>
@@ -91,10 +123,17 @@ export default function Home() {
         </div>
 
         <div className='flex flex-col px-10 gap-10'>
-          <h3 className='m-0'>Level:</h3>
+          <h3 className='m-0'>Level: {level}</h3> {/* Display user's level */}
         
           <div>
             <h3>Achievements:</h3>
+            <div className="flex gap-2">
+              {achievements.map((achievement: any) => (
+                <div key={achievement.achievement_id}>
+                  <img className=' w-12 h-12' src={achievement.achievement_img} alt={achievement.achievement_name} />
+                </div>
+              ))}
+            </div>
           </div>
 
           <div>
@@ -104,4 +143,4 @@ export default function Home() {
       </div>
     </main>
   );
-} 
+}
