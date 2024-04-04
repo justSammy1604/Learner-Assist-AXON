@@ -110,6 +110,10 @@ def CreateMCQ():
     )
 
     dist = np.average(results["distances"])  
+    q=[{
+                "question": x['question'],
+                "options": x['options'].split(","),
+                "correct": x['correct']} for x in results['metadata']]
     return jsonify({
         "questions": [
             {
