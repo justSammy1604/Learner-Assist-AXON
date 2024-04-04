@@ -2,11 +2,11 @@ import torch
 import wikipedia
 from transformers import AutoTokenizer, AutoModelWithLMHead
 
-def summarizer():
+def summarizer(param):
     tokenizer = AutoTokenizer.from_pretrained('t5-base')
     model = AutoModelWithLMHead.from_pretrained('t5-base', return_dict=True)
 
-    sequence = wikipedia.summary("cats", sentences=8)
+    sequence = wikipedia.summary(param, sentences=8)
     #print(sequence)
     inputs = tokenizer.encode("summarize: " + sequence, return_tensors='pt', max_length=512, truncation=True)
 
