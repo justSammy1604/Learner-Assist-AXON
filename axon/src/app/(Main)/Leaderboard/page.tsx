@@ -56,13 +56,13 @@ export default function Home() {
               username: name,
               email: email,
               img: image,
-              level: 2, // Set default level here if needed
+              level: 0, // Set default level here if needed
               course: [{ course_id: "", course_name: "", course_progress: 0 }],
               friend: [{ friend_id: "" }],
               achievement: [
-                { achievement_id: "01", achievement_name: "super 5", achievement_description: "solve first 5 questions", achievement_status: false, achievement_img: "" },
-                { achievement_id: "02", achievement_name: "super 10", achievement_description: "solve first 10 questions", achievement_status: false, achievement_img: ""  },
-                { achievement_id: "03", achievement_name: "super 15", achievement_description: "solve first 15 questions", achievement_status: false, achievement_img: "" }
+                { achievement_id: "01", achievement_name: "super 5", achievement_description: "solve first 5 questions", achievement_status: false, achievement_img: "https://i.ibb.co/Ny2f9pF/GEC-spectrum-ppt-removebg-preview.png" },
+                { achievement_id: "02", achievement_name: "super 10", achievement_description: "solve first 10 questions", achievement_status: false, achievement_img: "https://i.ibb.co/tDFnc5m/GEC-spectrum-ppt-2-removebg-preview.png"  },
+                { achievement_id: "03", achievement_name: "super 15", achievement_description: "solve first 15 questions", achievement_status: false, achievement_img: "https://i.ibb.co/9TbrqZ2/GEC-spectrum-ppt-1-removebg-preview.png" }
               ]
             });
             console.log("User data added to the database.");
